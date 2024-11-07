@@ -1,12 +1,11 @@
 const express = require("express")
-const userRouter = require("./routes/userRouter")
+const app = express()
+
+const usersRouter = require("./routes/usersRouter")
 
 require("dotenv").config()
 const path = require("node:path");
 const assetsPath = path.join(__dirname, "public");
-
-
-const app = express()
 
 app.use(express.urlencoded({ extended: true }));
 // static files
@@ -17,7 +16,7 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
 // routers
-app.use("/", userRouter)
+app.use("/", usersRouter)
 
 const PORT = process.env.PORT || 3000;
 

@@ -6,7 +6,7 @@
 <body>
   <h1><%= title %></h1>
   <%- include("partials/errors.ejs")%>
-  <form action="/create" method="POST">
+  <form action="/<%= user.id %>/update" method="POST">
     <label for="firstName">First Name: </label>
     <input type="text" name="firstName" id="firstName" required>
     <label for="lastName">Last Name: </label>

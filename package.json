@@ -9,6 +9,7 @@
     "pg": "^8.13.1"
   },
   "scripts": {
-    "serve": "nodemon app.js"
+    "serve": "nodemon app.js",
+    "populatedb" : "node db/populatedb.js"
   }
 }

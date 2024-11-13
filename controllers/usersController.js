@@ -1,4 +1,5 @@
 const usersStorage = require("../storages/usersStorage");
+const db = require("../db/queries")
 const { body, validationResult } = require("express-validator");
 
 const alphaErr = "must only contain letters.";
@@ -84,8 +85,42 @@ const usersUpdatePost = [
     res.render("searchResults", {title: "Search Results", results: results})
   }
 
+  async function getUsernames(req, res) {
+    const { search } = req.query
+    
+    if(search){
+      const results = await db.getUsersBySearch(search)
+      console.log("Results:", results)
+      // Remember to add return since res.send doesnt end the function
+      // Will throw an error since another res will not overwrite the current one without return
+      return res.send("Search Results: " + results.map(user => user.username).join(", "))
+    }
+
+    const usernames = await db.getAllUsernames();
+    res.send("Usernames: " + usernames.map(user => user.username).join(", "));
+  }
+  
+  async function createUsernameGet(req, res) {
+    // render the form
+  }
+  
+  async function createUsernamePost(req, res) {
+    const { username } = req.body;   
+    await db.insertUsername(username);
+    res.redirect("/");
+  }
+
+   async function deleteUsers(req, res) {
+    await db.deleteUsers()
+    res.send("Users deleted successfully.")
+   }
+
+
+
 
 module.exports = {usersListGet,usersCreateGet, 
   usersCreatePost, usersUpdateGet, 
   usersUpdatePost, usersDeletePost,
-  usersSearch}
+  usersSearch,  getUsernames,
+  createUsernameGet,
+  createUsernamePost}

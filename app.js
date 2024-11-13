@@ -1,9 +1,11 @@
+require("dotenv").config()
 const express = require("express")
 const app = express()
 
+
+
 const usersRouter = require("./routes/usersRouter")
 
-require("dotenv").config()
 const path = require("node:path");
 const assetsPath = path.join(__dirname, "public");
 
